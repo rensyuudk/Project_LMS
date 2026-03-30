@@ -1,0 +1,469 @@
+openapi: 3.0.0
+info:
+    title: lms
+    description: test api
+    version: 1.0.0
+
+servers:
+    - url: http://localhost:8000
+      description: server local
+
+paths:
+    /login:
+      post:
+        summary: login untuk dapat access
+        requestBody: 
+          required: true
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  email:
+                    type: string
+                    example: frey@gmail.com
+                  password:
+                    type: string
+                    example: "P4ssw0rd"
+        responses: 
+          '200':
+            description: login berhasil
+            content: 
+              application/json: 
+                schema: 
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      exampple: "eyJhbGciOiJIUzI1..."
+          '401':
+            description: email atau password salah
+      
+
+    /siswa:
+        get:
+          summary: mendapat semua daftar Siswa
+          responses:
+            '200':
+                description: berhasil mengambil data siswa
+                content: 
+                    application/json: 
+                     schema:
+                        type: array
+                        items: 
+                         $ref: '#/components/schemas/Siswa'
+        post:
+          summary: menambah siswa
+          description: gunakan endpoint ini untuk membuat siswa
+          requestBody: 
+            required: true
+            content:
+                application/json: 
+                  schema: 
+                    $ref: '#/components/schemas/Siswa'
+          responses: 
+            '201':
+                description: siswa berhasil didaftarkan
+                content: 
+                  application/json: 
+                    schema: 
+                      $ref: '#/components/schemas/Siswa'
+            '400':
+                description: data tidak lengkap atau email sudah terdaftar
+    /siswa/{id}:
+        put:
+            summary: update data siswa
+            parameters: 
+              - name: id
+                in: path
+                required: true
+                schema:
+                    type: integer
+            requestBody: 
+              required: true
+              content:
+                application/json: 
+                  schema: 
+                    $ref: '#/components/schemas/Siswa'
+            responses: 
+              '200':
+                description: berhasil memperbarui
+                content: 
+                  application/json: 
+                    schema: 
+                      $ref: '#/components/schemas/Siswa'
+              '400':
+                description: data tidak valid
+              '404':
+                description: siswa tidak ditemukan
+        delete:
+            summary: menghapus data siswa
+            parameters: 
+              - name: id
+                in: path
+                required: true
+                schema: 
+                  type: integer
+            responses: 
+              '204':
+                description: data siswa berhasil dihapus
+
+    /daftar:
+        get:
+            summary: mendapat semua data Daftar
+            responses: 
+              '200':
+                description: berhasil mengambil data
+                content: 
+                  application/json: 
+                    schema: 
+                      type: array
+                      items: 
+                        $ref: '#/components/schemas/Daftar'
+        post:
+            tags: 
+              - Daftar
+            summary: menambahkan data 
+            requestBody: 
+              required: true
+              content: 
+                application/json: 
+                  schema: 
+                    $ref: '#/components/schemas/Daftar'
+            responses: 
+              '201':
+                description: berhasil dibuat
+                content: 
+                  application/json: 
+                    schema: 
+                      $ref: '#/components/schemas/Daftar'
+              '400':
+                description: data tidak lengkap atau data sudah ada
+    /daftar/{id}:
+        delete:
+            tags: 
+              - Daftar
+            summary: hapus data daftar
+            parameters: 
+              - name: id
+                in: path
+                required: true
+                schema: 
+                  type: integer
+            responses: 
+              '204':
+                description: data berhasil dihapus
+
+    /kursus:
+        get:
+            tags: 
+              - Kursus
+            summary: ambil semua data daftar
+            responses: 
+              '200':
+                description: berhasil mengambil data daftar
+                content: 
+                  application/json: 
+                    schema:
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/Kursus'
+        post:
+          tags: 
+            - Kursus
+          summary: menambahkan data Kursus
+          requestBody: 
+            required: true
+            content: 
+              application/json: 
+                schema: 
+                  $ref: '#/components/schemas/Kursus'
+          responses: 
+            '201':
+                description: kursus berhasil dibuat
+                content: 
+                  application/json: 
+                    schema: 
+                      $ref: '#/components/schemas/Kursus'
+            '400':
+                description: data tidak lengkap atau data sudah ada
+    /kursus/{id}:
+        put:
+          tags: 
+            - Kursus
+          summary: update data Kursus
+          parameters: 
+            - name: id
+              in: path
+              required: true
+              schema: 
+                type: integer
+          requestBody: 
+            required: true
+            content: 
+              application/json: 
+                schema: 
+                  $ref: '#/components/schemas/Kursus'
+          responses: 
+            '200': 
+                description: berhasil update data
+                content: 
+                  application/json: 
+                    schema: 
+                      $ref: '#/components/schemas/Kursus'
+            '400':
+                description: data tidak lengkap
+            '404':
+                description: kursus tidak ditemukan
+        delete:
+            tags: 
+              - Kursus
+            summary: hapus data Kursus
+            parameters: 
+              - name: id
+                in: path
+                required: true
+                schema: 
+                  type: integer
+            responses: 
+              '204':
+                description: data berhasil dihapus
+
+    /modul:
+        get:
+            tags: 
+              - Modul
+            summary: mendapat semua daftar Modul
+            responses: 
+              '200':
+                description: berhasil mengambil data
+                content:
+                    application/json: 
+                      schema: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/Modul'
+        post:
+          tags: 
+            - Modul
+          summary: menambah modul
+          requestBody: 
+            required: true
+            content: 
+              application/json: 
+                schema: 
+                  $ref: '#/components/schemas/Modul'
+          responses: 
+            '201':
+                description: modul berhasil dibuat
+                content: 
+                  application/json: 
+                    schema: 
+                      $ref: '#/components/schemas/Modul'
+            '400':
+                description: data tidak lengkap atau data sudah ada
+    /modul/{id}:
+        put:
+            tags: 
+              - Modul
+            summary: update data Modul
+            parameters: 
+              - name: id
+                in: path
+                required: true
+                schema: 
+                  type: integer
+            requestBody: 
+              required: true
+              content: 
+                application/json: 
+                  schema: 
+                    $ref: '#/components/schemas/Modul'
+            responses: 
+              '200':
+                description: data berhasil di update
+                content: 
+                  application/json: 
+                    schema: 
+                      $ref: '#/components/schemas/Modul'
+              '400':
+                description: data tidak valid
+              '404':
+                description: data tidak diitemukan
+        delete:
+            tags: 
+              - Modul
+            summary: menghapus data Modul
+            parameters: 
+              - name: id
+                in: path
+                required: true
+                schema: 
+                  type: integer
+            responses: 
+              '204':
+                description: data berhasil dihapus
+
+    /nilai:
+        get:
+            tags: 
+              - Nilai
+            summary: mengambil semua data
+            responses: 
+              '200':
+                description: berhasil mengambil data
+                content: 
+                  application/json: 
+                    schema: 
+                      type: array
+                      items: 
+                        $ref: '#/components/schemas/Nilai'
+        post:
+            tags: 
+              - Nilai
+            summary: membuat data nilai
+            requestBody: 
+              required: true
+              content: 
+                application/json: 
+                  schema: 
+                    $ref: '#/components/schemas/Nilai'
+            responses: 
+              '201': 
+                description: berhasil membuat data nilai
+                content: 
+                  application/json: 
+                    schema: 
+                      $ref: '#/components/schemas/Nilai'
+              '400': 
+                description: data tidak valid atau data sudah ada
+    /nilai/{id}:
+        put:
+            tags: 
+              - Nilai
+            summary: update data nilai
+            parameters: 
+              - name: id
+                in: path
+                required: true
+                schema: 
+                  type: integer
+            requestBody: 
+              required: true
+              content: 
+                application/json: 
+                  schema: 
+                    $ref: '#/components/schemas/Nilai'
+            responses: 
+              '200':
+                description: berhasil update data
+                content: 
+                  application/json: 
+                    schema: 
+                      $ref:  '#/components/schemas/Nilai'
+              '400':
+                description: data tidak valid
+              '404':
+                description: data tidak ditemukan
+components:
+
+    schemas: 
+      Siswa:
+        type: object
+        required: 
+          - email
+          - password
+          - nama
+        properties: 
+          id:
+            type: integer
+            example: 1
+          email:
+            type: string
+            format: email
+            description: "email harus unik"
+            example: frey@gmail.com
+          password:
+            type: string
+            format: password
+            example: "P4ssw0rd"
+          nama:
+            type: string
+            example: "Freyja"
+      Daftar:
+        type: object
+        required: 
+          - siswa_id
+          - kursus_id
+        properties: 
+          id:
+            type: integer
+            example: 10
+          siswa_id:
+            type: integer
+            description: "relasi ke tabel siswa"
+            example: 1
+          kursus_id:
+            type: integer
+            description: "relasi ke tabel kursus"
+            example: 20
+          tanggal_daftar:
+            type: string
+            format: date
+            example: "2026-01-24"
+      Kursus:
+        type: object
+        required: 
+          - judul
+          - deskripsi
+        properties: 
+          id:
+            type: integer
+            example: 20
+          judul:
+            type: string
+            example: "RESTAPI"
+          deskripsi:
+            type: string
+            example: "belajar membuat restapi"
+      Modul:
+        type: object
+        required: 
+          - kursus_id
+          - judul
+          - konten
+        properties: 
+          id:
+            type: integer
+            example: 30
+          kursus_id:
+            type: integer
+            example: 20
+            description: "relasi ke tabel kursus"
+          judul:
+            type: string
+            example: "golang"
+          konten:
+            type: string
+            example: "belajar golang"
+      Nilai:
+        type: object
+        required: 
+          - siswa_id
+          - modul_id
+          - skor
+        properties: 
+          id:
+            type: integer
+            example: 40
+          siswa_id:
+            type: integer
+            example: 1
+            description: "relasi ke tabel siswa"
+          modul_id:
+            type: integer
+            example: 30
+            description: "relasi ke tabel modul"
+          skor:
+            type: integer
+            example: 85
