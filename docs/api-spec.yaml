@@ -102,7 +102,7 @@ paths:
         - module
       summary: ambil modul berdasarkan id
       parameters: 
-        - name: modul_id
+        - name: module_id
           in: path
           required: true
           schema: 
@@ -249,16 +249,16 @@ components:
     Module:
       type: object
       properties: 
-        modul_id:
+        module_id:
           type: integer
           example: 10
-        kursus_id:
+        course_id:
           type: integer
           example: 1
-        judul:
+        title:
           type:  string
           example: "backend golang"
-        konten:
+        content:
           type: string
           example: "belajar backend dengan golang"
       
@@ -305,7 +305,7 @@ components:
         student_id:
           type: integer
           example: 01
-        modul_id:
+        module_id:
           type: integer
           example: 10
         score:
