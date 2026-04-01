@@ -193,7 +193,7 @@ components:
     Student:
       type: object
       properties: 
-        student_id:
+        id:
           type: integer
           example: 01
         name:
@@ -228,7 +228,7 @@ components:
     Course:
       type: object
       properties: 
-        course_id:
+        id:
           type: integer
           example: 1
         title:
@@ -249,7 +249,7 @@ components:
     Module:
       type: object
       properties: 
-        module_id:
+        id:
           type: integer
           example: 10
         course_id:
@@ -273,7 +273,7 @@ components:
     Enrollment:
       type: object
       properties: 
-        enrollment_id:
+        id:
           type: integer
           example: 001
         student_id:
@@ -299,7 +299,7 @@ components:
     Score:
       type: object
       properties: 
-        score_id:
+        id:
           type: integer
           example: 101
         student_id:
